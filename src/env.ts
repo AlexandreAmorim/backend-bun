@@ -7,6 +7,9 @@ const envSchema = z.object({
 	AUTH_REDIRECT_URL: z.string().url(),
 	SES_ACCESS_KEY_ID: z.string(),
 	SES_SECRET_ACCESS_KEY: z.string(),
+	MAIL_FROM: z.string(),
+	MAIL_SITE: z.string(),
+	SES_REGION: z.string(),
 })
 
 export const env = envSchema.parse(process.env)

@@ -25,6 +25,7 @@ const app = new Elysia()
 			},
 		}),
 	)
+	.get('/', () => 'Hello Elysia')
 	.use(auth)
 	.use(signOut)
 	.use(createUser)

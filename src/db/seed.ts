@@ -8,8 +8,8 @@ import chalk from 'chalk'
 /**
  * Reset database
  */
-await db.delete(users)
 await db.delete(authLinks)
+await db.delete(users)
 
 console.log(chalk.yellowBright('✔️ Database reset!'))
 

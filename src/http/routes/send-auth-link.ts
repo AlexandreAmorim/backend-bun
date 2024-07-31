@@ -35,7 +35,7 @@ export const sendAuthLink = new Elysia().post(
 
 		const ses = new aws.SES({
 			apiVersion: '2024-08-05',
-			region: 'sa-east-1', // Your region will need to be updated
+			region: env.SES_REGION, // Your region will need to be updated
 			credentials: {
 				accessKeyId: env.SES_ACCESS_KEY_ID,
 				secretAccessKey: env.SES_SECRET_ACCESS_KEY,
@@ -49,7 +49,7 @@ export const sendAuthLink = new Elysia().post(
 		const info = await transporter.sendMail({
 			from: {
 				name: 'Horus Web',
-				address: 'hi@horus.com',
+				address: env.MAIL_FROM,
 			},
 			to: email,
 			subject: 'Authenticate to Horus web',
