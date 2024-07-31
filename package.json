@@ -21,6 +21,7 @@
     "lint": "bunx biome check --write src"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.621.0",
     "@elysiajs/cookie": "^0.8.0",
     "@elysiajs/cors": "^1.1.0",
     "@elysiajs/jwt": "^1.1.0",

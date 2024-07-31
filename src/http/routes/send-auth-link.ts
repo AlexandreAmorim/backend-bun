@@ -1,10 +1,10 @@
 import Elysia, { t } from 'elysia'
 import nodemailer from 'nodemailer'
+import * as aws from '@aws-sdk/client-ses'
 import { db } from '../../db/connection'
 import { createId } from '@paralleldrive/cuid2'
 import { authLinks } from '../../db/schema'
 import { env } from '../../env'
-import { mail } from '../../lib/mail'
 
 export const sendAuthLink = new Elysia().post(
 	'/authenticate',
@@ -33,7 +33,20 @@ export const sendAuthLink = new Elysia().post(
 		authLink.searchParams.set('code', authLinkCode)
 		authLink.searchParams.set('redirecturl', env.AUTH_REDIRECT_URL)
 
-		const info = await mail.sendMail({
+		const ses = new aws.SES({
+			apiVersion: '2024-08-05',
+			region: 'sa-east-1', // Your region will need to be updated
+			credentials: {
+				accessKeyId: env.SES_ACCESS_KEY_ID,
+				secretAccessKey: env.SES_SECRET_ACCESS_KEY,
+			},
+		})
+
+		const transporter = nodemailer.createTransport({
+			SES: { ses, aws },
+		})
+
+		const info = await transporter.sendMail({
 			from: {
 				name: 'Horus Web',
 				address: 'hi@horus.com',
