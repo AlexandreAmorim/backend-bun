@@ -12,6 +12,16 @@ const registerBodySchema = z.object({
 export const createUser = new Elysia().post('/users', async ({ body, set }) => {
 	const { name, phone, email } = registerBodySchema.parse(body)
 
+	const user = await db.query.users.findFirst({
+		where(fields, { eq }) {
+			return eq(fields.email, email)
+		},
+	})
+
+	if (user) {
+		throw new Error('E-mail consta como já cadastrado')
+	}
+
 	await db.insert(users).values({
 		name,
 		email,

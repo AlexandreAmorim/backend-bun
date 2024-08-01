@@ -4,11 +4,12 @@ import { auth } from '../auth'
 import dayjs from 'dayjs'
 import { authLinks } from '../../db/schema'
 import { eq } from 'drizzle-orm'
+import { env } from '../../env'
 
 export const authenticateFromLink = new Elysia().use(auth).get(
 	'/auth-links/authenticate',
 	async ({ query, signUser, redirect }) => {
-		const { code, redirecturl } = query
+		const { code } = query
 
 		const authLinkFromCode = await db.query.authLinks.findFirst({
 			where(fields, { eq }) {
@@ -17,7 +18,7 @@ export const authenticateFromLink = new Elysia().use(auth).get(
 		})
 
 		if (!authLinkFromCode) {
-			throw new Error('Auth link not found.')
+			return redirect(env.ERROR_REDIRECT_URL)
 		}
 
 		const daysSinceAuthLinkWasCreated = dayjs().diff(
@@ -35,12 +36,11 @@ export const authenticateFromLink = new Elysia().use(auth).get(
 
 		await db.delete(authLinks).where(eq(authLinks.code, code))
 
-		return redirect(redirecturl)
+		return redirect(env.AUTH_REDIRECT_URL)
 	},
 	{
 		query: t.Object({
 			code: t.String(),
-			redirecturl: t.String(),
 		}),
 	},
 )

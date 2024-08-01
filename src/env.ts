@@ -10,6 +10,7 @@ const envSchema = z.object({
 	MAIL_FROM: z.string(),
 	MAIL_SITE: z.string(),
 	SES_REGION: z.string(),
+	ERROR_REDIRECT_URL: z.string(),
 })
 
 export const env = envSchema.parse(process.env)
