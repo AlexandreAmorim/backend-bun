@@ -61,7 +61,7 @@ export const sendAuthLink = new Elysia().post(
 				address: env.MAIL_FROM,
 			},
 			to: email,
-			subject: 'Authenticate to Hórus web',
+			subject: 'Autenticação - Hórus',
 			html: emailHtml,
 		})
 
