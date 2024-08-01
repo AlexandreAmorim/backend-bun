@@ -27,6 +27,8 @@
     "@elysiajs/jwt": "^1.1.0",
     "@faker-js/faker": "^8.4.1",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@react-email/components": "^0.0.22",
+    "@types/react": "^18.3.3",
     "chalk": "^5.3.0",
     "dayjs": "^1.11.12",
     "drizzle-orm": "^0.32.1",

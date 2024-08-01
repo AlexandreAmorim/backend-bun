@@ -1,10 +1,12 @@
 import Elysia, { t } from 'elysia'
 import nodemailer from 'nodemailer'
-import * as aws from '@aws-sdk/client-ses'
+//import * as aws from '@aws-sdk/client-ses'
+//import { AuthenticationMagicLinkTemplate } from '@/mail/templates/authentication-magic-link'
 import { db } from '../../db/connection'
 import { createId } from '@paralleldrive/cuid2'
 import { authLinks } from '../../db/schema'
 import { env } from '../../env'
+import { mail } from '../../lib/mail'
 
 export const sendAuthLink = new Elysia().post(
 	'/authenticate',
@@ -33,6 +35,7 @@ export const sendAuthLink = new Elysia().post(
 		authLink.searchParams.set('code', authLinkCode)
 		authLink.searchParams.set('redirecturl', env.AUTH_REDIRECT_URL)
 
+		/*
 		const ses = new aws.SES({
 			apiVersion: '2024-08-05',
 			region: env.SES_REGION, // Your region will need to be updated
@@ -48,11 +51,25 @@ export const sendAuthLink = new Elysia().post(
 
 		const info = await transporter.sendMail({
 			from: {
-				name: 'Horus Web',
+				name: 'Hórus Web',
 				address: env.MAIL_FROM,
 			},
 			to: email,
-			subject: 'Authenticate to Horus web',
+			subject: 'Authenticate to Hórus web',
+			react: AuthenticationMagicLinkTemplate({
+        userEmail: email,
+        authLink: authLink.toString(),
+      }),
+		})
+		*/
+
+		const info = await mail.sendMail({
+			from: {
+				name: 'Horus Web',
+				address: 'hi@horus.com',
+			},
+			to: email,
+			subject: 'Authenticate to Horus Web',
 			text: `Use the following link to authenticate on Horus Web: ${authLink.toString()}`,
 		})
 
