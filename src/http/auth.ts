@@ -37,6 +37,8 @@ export const auth = new Elysia()
 				auth.httpOnly = true
 				auth.maxAge = 60 * 60 * 24 * 7 // 7 days
 				auth.path = '/'
+				auth.sameSite = 'none'
+				auth.secure = true
 			},
 
 			signOut: () => {
