@@ -5,7 +5,7 @@ import { db } from '../../db/connection'
 import { createId } from '@paralleldrive/cuid2'
 import { authLinks } from '../../db/schema'
 import { env } from '../../env'
-import { mail } from '../../lib/mail'
+//import { mail } from '../../lib/mail'
 import { render } from '@react-email/components'
 import { AuthenticationMagicLinkTemplate } from '../../lib/templates/authentication-magic-link'
 
@@ -35,7 +35,7 @@ export const sendAuthLink = new Elysia().post(
 
 		authLink.searchParams.set('code', authLinkCode)
 		//authLink.searchParams.set('redirecturl', env.AUTH_REDIRECT_URL)
-		/*
+		
 		const ses = new aws.SES({
 			apiVersion: '2024-08-05',
 			region: env.SES_REGION, // Your region will need to be updated
@@ -65,7 +65,7 @@ export const sendAuthLink = new Elysia().post(
 			html: emailHtml,
 		})
 
-		*/
+		/*
 		const emailHtml = render(
 			AuthenticationMagicLinkTemplate({
 				userEmail: email,
@@ -83,6 +83,7 @@ export const sendAuthLink = new Elysia().post(
 		})
 
 		console.log(nodemailer.getTestMessageUrl(info))
+			*/
 	},
 	{
 		body: t.Object({
